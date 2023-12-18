@@ -208,9 +208,11 @@ public class DiskSpawner : MonoBehaviour
 // Stores the data for each pillar 
 public class PillarData
 {
+    //Pillar attributes
     public Stack<GameObject> diskStack;
     public Vector3 position;
 
+    //Pillar constructor
     public PillarData(Vector3 pos)
     {
         diskStack = new Stack<GameObject>();
