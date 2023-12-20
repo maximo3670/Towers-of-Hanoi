@@ -15,4 +15,8 @@ public class mainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    public void PlayFourPillars(){
+        SceneManager.LoadScene(2);
+    }
+
 }
