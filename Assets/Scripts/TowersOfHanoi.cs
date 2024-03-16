@@ -1,6 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class TowersOfHanoi : MonoBehaviour
 {
@@ -18,9 +23,27 @@ public class TowersOfHanoi : MonoBehaviour
     //Tracking the position of the pillars
     public Vector3[] pillarPositions;
 
+    public int movesCount = 0;
+    public TextMeshProUGUI  movesCountText;
+    public GameObject solvedText;
+    public Button returnToMenu;
+
+    private leaderBoardHandler leaderboard;
+
+    public bool solved = false;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        if(returnToMenu != null)
+        {
+            returnToMenu.onClick.AddListener(MainMenu);
+        }
+
+        solvedText.SetActive(false);
+        movesCountText.text = "0";
+
         //Creating a stack on each pillar
         int i = 0;
         for (char pillarName = 'A'; pillarName <= 'C'; pillarName++)
@@ -29,6 +52,8 @@ public class TowersOfHanoi : MonoBehaviour
             i++;
         }
 
+        diskCount = PlayerPrefs.GetInt("SliderValue", 3);
+
         //spawnin in the disks
         SpawnDisks();
     }
@@ -36,30 +61,33 @@ public class TowersOfHanoi : MonoBehaviour
     // update is called once per frame
     void Update()
     {
+
         //Check to see if the mouse button is pressed
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Gets the location of the mouse pointer after mous is pressed
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            //Checked to see if the mouse has clicked on something
-            if (Physics.Raycast(ray, out hit))
+        if(!solved){
+            if (Input.GetMouseButtonDown(0))
             {
-                //Gets the object that was clicked on
-                GameObject hitObject = hit.collider.gameObject;
+                //Gets the location of the mouse pointer after mous is pressed
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-                // Check if the hit object is a disk
-                if (hitObject.CompareTag("Disk"))
+                //Checked to see if the mouse has clicked on something
+                if (Physics.Raycast(ray, out hit))
                 {
-                    // calls the SelectDisk() function
-                    SelectDisk(hitObject);
-                }
-                // Checks if a pillar has been selected and is a disk is selected to move the disk
-                else if (selectedDisk != null && hitObject.CompareTag("Pillar"))
-                {
-                    // Calls the MoveDisk function 
-                    MoveDisk(hitObject);
+                    //Gets the object that was clicked on
+                    GameObject hitObject = hit.collider.gameObject;
+
+                    // Check if the hit object is a disk
+                    if (hitObject.CompareTag("Disk"))
+                    {
+                        // calls the SelectDisk() function
+                        SelectDisk(hitObject);
+                    }
+                    // Checks if a pillar has been selected and is a disk is selected to move the disk
+                    else if (selectedDisk != null && hitObject.CompareTag("Pillar"))
+                    {
+                        // Calls the MoveDisk function 
+                        MoveDisk(hitObject);
+                    }
                 }
             }
         }
@@ -157,11 +185,52 @@ public class TowersOfHanoi : MonoBehaviour
 
                     //Moves the disk visually with the coordinates of the target pillar
                     movedDisk.transform.position = new Vector3(targetPillar.position.x, newYPosition, targetPillar.position.z);
+                
+                    movesCount++;
+                    movesCountText.text = movesCount.ToString();
+
+                    if(isSolved()){
+                        solvedText.SetActive(true);
+                        solved = true;
+
+                        //Add score to playerPrefs
+                        addMoves(movesCount, diskCount);
+
+                    }
                 }
             }
         }
     }
     
+    private void addMoves(int moveCount, int diskCount)
+    {
+        // Load current scores for the given disk count
+        List<int> moves = LoadMoves(diskCount);
+
+        // Add new score
+        moves.Add(moveCount);
+
+        // Save updated scores
+        SaveMoves(moves, diskCount);
+    }
+
+    private List<int> LoadMoves(int diskCount)
+    {
+        List<int> moves = new List<int>();
+        string scoresString = PlayerPrefs.GetString($"Leaderboard_{diskCount}", "");
+        if (!string.IsNullOrEmpty(scoresString))
+        {
+            moves.AddRange(scoresString.Split(',').Select(int.Parse));
+        }
+        return moves;
+    }
+
+    private void SaveMoves(List<int> moves, int diskCount)
+    {
+        string scoresString = string.Join(",", moves);
+        PlayerPrefs.SetString($"Leaderboard_{diskCount}", scoresString);
+        PlayerPrefs.Save();
+    }
 
     //Function isLegalMove(PillarData, PillarData)
     //This function checks if the disks can move depening on the size of the disk
@@ -202,6 +271,18 @@ public class TowersOfHanoi : MonoBehaviour
         //else return null
         return null;
     }
+
+    public bool isSolved(){
+        if(pillars["pillar C"].diskStack.Count == diskCount){
+            return true;
+        }
+        return false;
+    }
+
+    public void MainMenu(){
+        SceneManager.LoadScene(0);
+    }
+
 }
 
 // Object PillarData

@@ -1,7 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.PlayerPrefsEditor.Editor", "Unity.PlayerPrefsEditor.Editor.csproj", "{19113E13-A4FB-72A6-AB11-FDB2A38F70DC}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{24E1BC68-2DF4-F1A4-E1BA-2326221D69F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.PlayerPrefsEditor.Samples.SampleScene", "Unity.PlayerPrefsEditor.Samples.SampleScene.csproj", "{DCC25C52-470C-E1FF-34E0-AB83D2E0A2CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.PlayerPrefsEditor.EditorResources", "Unity.PlayerPrefsEditor.EditorResources.csproj", "{F935F4C7-8D20-9923-39CE-605A9FF9B406}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +15,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19113E13-A4FB-72A6-AB11-FDB2A38F70DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19113E13-A4FB-72A6-AB11-FDB2A38F70DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19113E13-A4FB-72A6-AB11-FDB2A38F70DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19113E13-A4FB-72A6-AB11-FDB2A38F70DC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{24E1BC68-2DF4-F1A4-E1BA-2326221D69F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{24E1BC68-2DF4-F1A4-E1BA-2326221D69F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24E1BC68-2DF4-F1A4-E1BA-2326221D69F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24E1BC68-2DF4-F1A4-E1BA-2326221D69F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCC25C52-470C-E1FF-34E0-AB83D2E0A2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCC25C52-470C-E1FF-34E0-AB83D2E0A2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCC25C52-470C-E1FF-34E0-AB83D2E0A2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCC25C52-470C-E1FF-34E0-AB83D2E0A2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F935F4C7-8D20-9923-39CE-605A9FF9B406}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F935F4C7-8D20-9923-39CE-605A9FF9B406}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F935F4C7-8D20-9923-39CE-605A9FF9B406}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F935F4C7-8D20-9923-39CE-605A9FF9B406}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
