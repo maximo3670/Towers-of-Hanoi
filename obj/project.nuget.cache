@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9JrOgacGQxDZZtegTClyLOZ0lP+356OAnKDLrtLpn0esqONDV6wRoBV19SUrmHNG2FMCzInaaeXjG4yAoA2bRA==",
+  "dgSpecHash": "4MQDwk6vBx+a7+0qa2CLSbXrLbwPWkqsQ4rRgfIi1WRwNHpQFkr145DUVLUmeIxwuTc4QJdoJif6znLfNejS7Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\maxwe\\Documents\\University\\Project\\Towers of Hanoi\\Unity.PlayerPrefsEditor.Editor.csproj",
+  "projectFilePath": "C:\\Users\\maxwe\\Documents\\University\\Project\\Towers of Hanoi\\Unity.PlayerPrefsEditor.Samples.SampleScene.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.SceneManagement;
+using System.Linq;
+using System.Collections;
 
 public class FourPillars : MonoBehaviour
 {
@@ -18,10 +24,20 @@ public class FourPillars : MonoBehaviour
     Dictionary<string, FourPillarData> pillars = new Dictionary<string, FourPillarData>();
     //Tracking the position of the pillars
     public Vector3[] pillarPositions;
+    public GameObject illegalMove;
+    public GameObject solvedText;
+    public Button returnToMenu;
+    public bool solved = false;
+    public int movesCount = 0;
+    public TextMeshProUGUI  movesCountText;
 
     // Start is called before the first frame update
     void Start()
     {
+        if(returnToMenu != null){
+            returnToMenu.onClick.AddListener(MainMenu);
+        }
+
         //Creating a stack on each pillar
         int i = 0;
         for (char pillarName = 'A'; pillarName <= 'D'; pillarName++)
@@ -29,6 +45,10 @@ public class FourPillars : MonoBehaviour
             pillars["pillar " + pillarName] = new FourPillarData(pillarPositions[i]);
             i++;
         }
+
+        solvedText.SetActive(false);
+        illegalMove.SetActive(false);
+        movesCountText.text = "0";
 
         //spawnin in the disks
         SpawnDisks();
@@ -163,6 +183,26 @@ public class FourPillars : MonoBehaviour
 
                     //Moves the disk visually with the coordinates of the target pillar
                     movedDisk.transform.position = new Vector3(targetPillar.position.x, newYPosition, targetPillar.position.z);
+                
+                    if (selectedDisk != null)
+                    {
+                        // Reset the color
+                        selectedDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", previousColor);
+
+                        // Now, clear or nullify the selectedDisk as it's no longer selected after moving
+                        selectedDisk = null;
+                        previouslySelectedDisk = null; // Clear this as well if you're done with the move
+                    }
+
+                    movesCount++;
+                    movesCountText.text = movesCount.ToString();
+
+                    if(isSolved()){
+                        solvedText.SetActive(true);
+                        solved = true;
+
+                    }
+                
                 }
             }
         }
@@ -186,12 +226,23 @@ public class FourPillars : MonoBehaviour
             {
                 //doesn't allow the disk to be moved if it is larger
                 UnityEngine.Debug.Log("Cannot place larger disk on a smaller one!");
+                illegalMove.SetActive(true);
+                StartCoroutine(HideMessageAfterDelay(3f));
                 return false;
             }
         }
         //else return true
         return true;
     }
+
+    IEnumerator HideMessageAfterDelay(float delay)
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+
+        illegalMove.SetActive(false);
+    }
+
 
     //Function GetDiskCurrentPillarName(GameObject)
     //This function returns the name of the pillar a given disk is on
@@ -208,6 +259,45 @@ public class FourPillars : MonoBehaviour
         //else return null
         return null;
     }
+
+    public bool isSolved()
+    {
+        // Ensure each pillar has the correct number of disks for the win condition
+        if (pillars["pillar A"].diskStack.Count == diskCount && pillars["pillar D"].diskStack.Count == diskCount)
+        {
+            // Check if all disks on pillar A are now blue
+            bool pillarAIsCorrect = true;
+            foreach (var disk in pillars["pillar A"].diskStack)
+            {
+                if (disk.GetComponent<MeshRenderer>().material.color != Color.blue)
+                {
+                    print("False");
+                    pillarAIsCorrect = false;
+                    break;
+                }
+            }
+
+            // Check if all disks on pillar D are now red
+            bool pillarDIsCorrect = true;
+            foreach (var disk in pillars["pillar D"].diskStack)
+            {
+                if (disk.GetComponent<MeshRenderer>().material.color != Color.red)
+                {
+                    print("False");
+                    pillarDIsCorrect = false;
+                    break;
+                }
+            }
+
+            return pillarAIsCorrect && pillarDIsCorrect;
+        }
+        return false;
+    }
+
+    public void MainMenu(){
+        SceneManager.LoadScene(0);
+    }
+
 }
 
 // Object FourPillarData

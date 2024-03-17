@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Collections;
 
 public class TowersOfHanoi : MonoBehaviour
 {
@@ -27,10 +28,11 @@ public class TowersOfHanoi : MonoBehaviour
     public TextMeshProUGUI  movesCountText;
     public GameObject solvedText;
     public Button returnToMenu;
-
-    private leaderBoardHandler leaderboard;
-
+    public GameObject illegalMove;
     public bool solved = false;
+
+    private Color diskColor = Color.grey;
+    private Color selectedDiskColor = Color.green;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +44,7 @@ public class TowersOfHanoi : MonoBehaviour
         }
 
         solvedText.SetActive(false);
+        illegalMove.SetActive(false);
         movesCountText.text = "0";
 
         //Creating a stack on each pillar
@@ -113,7 +116,7 @@ public class TowersOfHanoi : MonoBehaviour
             newDisk.transform.localScale = new Vector3(scale, scale, 12f);
 
             // Assigns a color to each disk 
-            newDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
+            newDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", diskColor);
 
             // Add the newly spawned disk to the stack of the first pillar
             pillars["pillar A"].diskStack.Push(newDisk);
@@ -139,7 +142,7 @@ public class TowersOfHanoi : MonoBehaviour
         {
             // Change the color of the previously selected disk back to red
             previouslySelectedDisk = selectedDisk;
-            previouslySelectedDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.red);
+            previouslySelectedDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", diskColor);
         }
 
         //Assigns the selectedDisk variable
@@ -148,7 +151,7 @@ public class TowersOfHanoi : MonoBehaviour
         selectedDisk = pillars[pillar].GetTopDisk();
 
         //Changes the colour to green
-        selectedDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", Color.green);
+        selectedDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", selectedDiskColor);
     }
 
     //Function MoveDisk(GameObject)
@@ -186,6 +189,16 @@ public class TowersOfHanoi : MonoBehaviour
                     //Moves the disk visually with the coordinates of the target pillar
                     movedDisk.transform.position = new Vector3(targetPillar.position.x, newYPosition, targetPillar.position.z);
                 
+                    if (selectedDisk != null)
+                    {
+                        // Reset the color
+                        selectedDisk.GetComponent<MeshRenderer>().material.SetColor("_Color", diskColor);
+
+                        // Now, clear or nullify the selectedDisk as it's no longer selected after moving
+                        selectedDisk = null;
+                        previouslySelectedDisk = null; // Clear this as well if you're done with the move
+                    }
+
                     movesCount++;
                     movesCountText.text = movesCount.ToString();
 
@@ -249,11 +262,21 @@ public class TowersOfHanoi : MonoBehaviour
             {
                 //doesn't allow the disk to be moved if it is larger
                 UnityEngine.Debug.Log("Cannot place larger disk on a smaller one!");
+                illegalMove.SetActive(true);
+                StartCoroutine(HideMessageAfterDelay(3f));
                 return false;
             }
         }
         //else return true
         return true;
+    }
+
+    IEnumerator HideMessageAfterDelay(float delay)
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delay);
+
+        illegalMove.SetActive(false);
     }
 
     //Function GetDiskCurrentPillarName(GameObject)
