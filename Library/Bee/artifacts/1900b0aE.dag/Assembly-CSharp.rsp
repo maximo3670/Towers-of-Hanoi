@@ -361,6 +361,7 @@
 "Assets/Scripts/howToPlay.cs"
 "Assets/Scripts/leaderBoardHandler.cs"
 "Assets/Scripts/mainMenu.cs"
+"Assets/Scripts/options.cs"
 "Assets/Scripts/sliderManager.cs"
 "Assets/Scripts/TowersOfHanoi.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
