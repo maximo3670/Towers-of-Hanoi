@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fourPillars.unity
     guid: 4f242c9c8adafd44ba14001c2ff2e500
+  - enabled: 1
+    path: Assets/Scenes/magnetic.unity
+    guid: f6c6a32d3b92f5b40afeccce57e564c2
   m_configObjects: {}

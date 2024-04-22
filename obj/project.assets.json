@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\maxwe\\Documents\\University\\Project\\Towers of Hanoi\\Unity.PlayerPrefsEditor.EditorResources.csproj",
-      "projectName": "Unity.PlayerPrefsEditor.EditorResources",
-      "projectPath": "C:\\Users\\maxwe\\Documents\\University\\Project\\Towers of Hanoi\\Unity.PlayerPrefsEditor.EditorResources.csproj",
+      "projectUniqueName": "C:\\Users\\maxwe\\Documents\\University\\Project\\Towers of Hanoi\\Unity.PlayerPrefsEditor.Samples.SampleScene.csproj",
+      "projectName": "Unity.PlayerPrefsEditor.Samples.SampleScene",
+      "projectPath": "C:\\Users\\maxwe\\Documents\\University\\Project\\Towers of Hanoi\\Unity.PlayerPrefsEditor.Samples.SampleScene.csproj",
       "packagesPath": "C:\\Users\\maxwe\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\maxwe\\Documents\\University\\Project\\Towers of Hanoi\\obj\\",
       "projectStyle": "PackageReference",
@@ -54,7 +54,7 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.104\\RuntimeIdentifierGraph.json"
       }
     }
   }

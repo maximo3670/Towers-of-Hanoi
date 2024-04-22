@@ -19,4 +19,8 @@ public class mainMenu : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    public void PlayMagnetic(){
+        SceneManager.LoadScene(3);
+    }
+
 }
